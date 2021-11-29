@@ -19,12 +19,12 @@ const userSchema = new Schema({
     minlength: 8,
   },
 
-  //0: 1 or 2 drinks, 1: get a solid buzz, 2: drunk, but not crazy, 3: YOLO
+  //1: 1 or 2 drinks, 2: get a solid buzz, 3: drunk, but not crazy, 4: YOLO
   drink_level: [{
     type: Number,
   }],
 
-  // 0: $7 or less/drink; 1: $8-14/drink; 2: $15-20/drink; 3: over $20/drink
+  // 1: $7 or less/drink; 2: $8-14/drink; 3: $15-20/drink; 4: over $20/drink
   price_range: [{
     type: Number,
   }],

@@ -5,6 +5,11 @@ const interestSchema = new Schema({
     type: String,
     required: true,
     trim: true,
+  },
+
+  popularity: {
+    type: Number,
+    default: 0,
   }
 
 });

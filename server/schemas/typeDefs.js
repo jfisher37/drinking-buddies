@@ -6,26 +6,15 @@ const typeDefs = gql`
     name: String!
     email: String!
     password: String!
-    level: Int
+    drink_level: [Int]
+    price_range: [Int]
+    interests: [Interest]
   }
 
-  type Video {
+  type Interest {
     _id: ID
-    title: String!
-    cloudURL: String!
-    likes: Int
-    dislikes: Int
-    views: Int
-    publishDate: String
-    videoAuthor: String!
-    likedBy: [String]
-    dislikedBy: [String]
-    genres: [Genre]
-  }
-
-  type Genre {
     name: String!
-    videos: [Video]
+    popularity: Int
   }
 
   type Auth {
@@ -34,24 +23,28 @@ const typeDefs = gql`
   }
 
   type Query {
-   videos: [Video]!
-   video(videoId: ID!): Video
-   myVideos(videoAuthor: String!): [Video]
+   interests: [Interest]
+   interest(_id: ID!): Interest
    users: [User]
    user(_id: ID!): User
-   genres: [Genre]
-   genre(_id: ID!): Genre
-   me: User
   }
 
   type Mutation {
-    addVideo(title: String!, cloudURL: String!, videoAuthor: String!): Video
-    addUser(name: String!, email: String!, password: String!, level: Int): Auth
     login(email: String!, password: String!): Auth
-    videoMetrics(videoId: String, views: Int): Video
-    updateLikes(videoId: String, user: String): Video
-    updateDislikes(videoId: String, user: String): Video
-    removeVideo(videoId: ID!): Video
+    addUser(name: String!, email: String!, password: String!): Auth
+    updateUserInfo(name: String!, email: String!, password: String!): User
+    addUserInterest(_id: ID!, interest: ID!): User
+    deleteUserInterest(_id: ID!, interest: ID!): User
+    addPriceRange(_id: ID!, price_range: Int): User
+    deletePriceRange(_id: ID!, price_range: Int): User
+    addDrinkLevel(_id: ID!, drink_level: Int): User
+    deleteDrinkLevel(_id: ID!, drink_level: Int): User
+    deleteUser(_id: ID!): User
+    addInterest(name: String!): Interest
+    deleteInterest(_id: ID!): Interest
+    updateInterest(_id: ID!, name: String!): Interest
+    incPopularity(_id: ID!): Interest
+    decPopularity(_id: ID!): Interest
   }
 `;
 

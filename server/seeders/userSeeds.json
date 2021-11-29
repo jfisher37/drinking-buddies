@@ -2,12 +2,16 @@
   {
     "name": "Joey",
     "email": "Joey@Joey.Joey",
-    "password": "passwordJoey1!"
+    "password": "passwordJoey1!",
+    "drink_level": [1, 2, 3, 4],
+    "price_range": [1, 2, 3]
   },
   {
     "name": "Test",
     "email": "Test@Test.Test",
-    "password": "passwordTest1!"
+    "password": "passwordTest1!",
+    "drink_level": [1, 2],
+    "price_range": [3, 4]
   }
   
 ]
