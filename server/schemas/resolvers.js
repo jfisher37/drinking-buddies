@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Video, Genre } = require("../models");
+const { User, Interest } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -16,8 +16,7 @@ const resolvers = {
 
     // Query for all interests
     interests: async () => {
-      return await Interest.find();
-      // .sort({ popularity: -1 })
+      return await Interest.find().sort({ popularity: -1 })
     },
 
     // Query for one interest
