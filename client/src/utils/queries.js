@@ -6,7 +6,6 @@ query QUERY_ALL_USERS{
     _id
     name
     email
-    password
     drink_level
     price_range
     interests {
@@ -21,7 +20,6 @@ query QUERY_SINGLE_USER ($_id: ID!){
   user (_id: $_id){
     name
     email
-    password
     drink_level
     price_range
     interests {

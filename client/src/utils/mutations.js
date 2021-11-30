@@ -92,3 +92,26 @@ export default ADD_VIDEO;
 
 
 
+mutation ADD_USER ($name: String!, $email: String!, $password: String!){
+  addUser (name: $name, email: $email, password: $password){
+    user{
+      name
+      email
+    }
+  }
+}
+
+mutation LOGIN($email: String!, $password: String!){
+  login(email: $email, password: $password){
+    user {
+      name
+    }
+  }
+}
+
+mutation UPDATE_USER_INFO($_id: ID!, $name: String!, $email: String!, $password: String!){
+  updateUserInfo(_id: $_id, name: $name, email: $email, password: $password){
+    name
+    email
+  }
+}

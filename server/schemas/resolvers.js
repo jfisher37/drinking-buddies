@@ -1,6 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Interest } = require("../models");
 const { signToken } = require("../utils/auth");
+const bcrypt = require("bcrypt");
 
 const resolvers = {
   Query: {
@@ -28,7 +29,7 @@ const resolvers = {
   Mutation: {
     // Mutation to add an interest
     addInterest: async (parent, { name }) => {
-      const interest = await Video.create({ name });
+      const interest = await Interest.create({ name });
       return interest;
     },
 
@@ -57,12 +58,16 @@ const resolvers = {
 
     // Mutation to update views
     updateUserInfo: async (parent, { _id, name, email, password }) => {
-      const user = await addUser.findOneAndUpdate(
+      const saltRounds = 10;
+      const newPassword = await bcrypt.hash(password, saltRounds);
+      console.log(password)
+      console.log(newPassword)
+      const user = await User.findOneAndUpdate(
         { _id: _id },
         {
           name: name,
           email: email,
-          password: password,
+          password: newPassword,
         },
         {
           new: true,
@@ -73,7 +78,7 @@ const resolvers = {
 
     // Mutation to add an interest to a user
     addUserInterest: async (parent, { _id, interest }) => {
-      const user = await addUser.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: _id },
         {
           $push: { interests: interest },
@@ -87,7 +92,7 @@ const resolvers = {
 
     // Mutation to delete an interest from a user
     deleteUserInterest: async (parent, { _id, interest }) => {
-      const user = await addUser.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: _id },
         {
           $pull: { interests: interest },
@@ -101,7 +106,7 @@ const resolvers = {
 
     // Mutation to add a price-range to a user
     addPriceRange: async (parent, { _id, price_range }) => {
-      const user = await addUser.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: _id },
         {
           $push: { price_range: price_range },
@@ -115,7 +120,7 @@ const resolvers = {
 
     // Mutation to delete a price-range from a user
     deletePriceRange: async (parent, { _id, price_range }) => {
-      const user = await addUser.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: _id },
         {
           $pull: { price_range: price_range },
@@ -129,7 +134,7 @@ const resolvers = {
 
     // Mutation to add a drink-level to a user
     addDrinkLevel: async (parent, { _id, drink_level }) => {
-      const user = await addUser.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: _id },
         {
           $push: { drink_level: drink_level },
@@ -143,7 +148,7 @@ const resolvers = {
 
     // Mutation to delete a drink-level to a user
     deleteDrinkLevel: async (parent, { _id, drink_level }) => {
-      const user = await addUser.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: _id },
         {
           $pull: { drink_level: drink_level },
