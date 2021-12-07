@@ -1,44 +1,37 @@
 import { gql } from "@apollo/client";
 
 export const ADD_USER = gql`
-  mutation addUser($name: String!, $email: String!, $password: String!, $level: Int) {
-    addUser(name: $name, email: $email, password: $password, level: $level) {
-      token
-    }
+mutation ADD_USER ($name: String!, $email: String!, $password: String!){
+  addUser (name: $name, email: $email, password: $password){
+    token
   }
+}
 `;
 
-export const ADD_VIDEO = gql`
-  mutation addVideo($title: String!, $cloudURL: String!, $videoAuthor: String!) {
-    addVideo(title: $title, cloudURL: $cloudURL, videoAuthor: $videoAuthor) {
-      _id
-      title
-      cloudURL
-      videoAuthor
-      publishDate
-    }
+export const UPDATE_USER_INFO = gql`
+mutation UPDATE_USER_INFO($_id: ID!, $name: String!, $email: String!, $password: String!){
+  updateUserInfo(_id: $_id, name: $name, email: $email, password: $password){
+    name
+    email
   }
+}
 `;
 
-export const LOGIN_USER = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      user {
-        _id
-        name
-        level
-      }
-    }
+export const LOGIN = gql`
+mutation LOGIN($email: String!, $password: String!){
+  login(email: $email, password: $password){
+    token
   }
+}
 `;
 
-export const VIDEO_METRICS = gql`
-  mutation videoMetrics($videoId: String, $views: Int) {
-    videoMetrics(videoId: $videoId, views: $views) {
-      views
-    }
+export const ADD_INTEREST = gql`
+mutation ADD_INTEREST($name: String!){
+  addInterest (name: $name){
+    _id
+    name
   }
+}
 `;
 
 export const UPDATE_LIKES = gql`
@@ -92,26 +85,6 @@ export default ADD_VIDEO;
 
 
 
-mutation ADD_USER ($name: String!, $email: String!, $password: String!){
-  addUser (name: $name, email: $email, password: $password){
-    user{
-      name
-      email
-    }
-  }
-}
 
-mutation LOGIN($email: String!, $password: String!){
-  login(email: $email, password: $password){
-    user {
-      name
-    }
-  }
-}
 
-mutation UPDATE_USER_INFO($_id: ID!, $name: String!, $email: String!, $password: String!){
-  updateUserInfo(_id: $_id, name: $name, email: $email, password: $password){
-    name
-    email
-  }
-}
+

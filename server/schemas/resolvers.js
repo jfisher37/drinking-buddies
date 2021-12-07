@@ -29,6 +29,7 @@ const resolvers = {
   Mutation: {
     // Mutation to add an interest
     addInterest: async (parent, { name }) => {
+      name = name.toLowerCase();
       const interest = await Interest.create({ name });
       return interest;
     },
