@@ -34,18 +34,13 @@ mutation ADD_INTEREST($name: String!){
 }
 `;
 
-export const UPDATE_LIKES = gql`
-mutation updateLikes($videoId: String, $user: String) {
-  updateLikes(videoId: $videoId, user: $user) {
-    _id
-    title
-    cloudURL
-    likes
-    dislikes
-    views
-    publishDate
-    likedBy
-    dislikedBy
+export const ADD_USER_INTEREST = gql`
+mutation ADD_USER_INTEREST($_id: ID!, $interest: ID!){
+  addUserInterest (_id: $_id, interest: $interest){
+    name
+    interests {
+      name
+    }
   }
 }
 `;
