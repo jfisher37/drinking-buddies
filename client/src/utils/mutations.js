@@ -80,7 +80,7 @@ export const REMOVE_VIDEO = gql`
   }
 `
 
-export default ADD_VIDEO;
+export default ADD_INTEREST;
 
 
 

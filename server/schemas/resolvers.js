@@ -7,12 +7,12 @@ const resolvers = {
   Query: {
     // Query for all users
     users: async () => {
-      return User.find();
+      return User.find().populate('interests');
     },
 
     // Query for one user
     user: async (parent, { _id }) => {
-      return User.findById(_id);
+      return User.findById(_id).populate('interests');
     },
 
     // Query for all interests
@@ -79,15 +79,21 @@ const resolvers = {
 
     // Mutation to add an interest to a user
     addUserInterest: async (parent, { _id, interest }) => {
+      const addedInterest = await Interest.findById({ _id: interest });
+      const oldData = await User.findById(_id).populate('interests');
+      const currentInterests = oldData.interests.map((interest) => {return interest._id});
+
+      if (currentInterests.includes(interest)) {return};
+      
       const user = await User.findOneAndUpdate(
         { _id: _id },
         {
-          $push: { interests: interest },
+          $push: { interests: addedInterest },
         },
         {
           new: true,
         }
-      );
+      ).populate('interests');
       return user;
     },
 
