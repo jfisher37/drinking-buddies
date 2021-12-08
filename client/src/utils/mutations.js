@@ -56,6 +56,15 @@ mutation DELETE_USER_INTEREST ($_id: ID!, $interest: ID!){
 }
 `;
 
+export const ADD_PRICE_RANGE = gql`
+mutation ADD_PRICE_RANGE($_id: ID!, $price_range: Int){
+  addPriceRange(_id: $_id, price_range: $price_range){
+    name
+    price_range
+  }
+}
+`;
+
 export const REMOVE_VIDEO = gql`
   mutation removeVideo($videoId: ID!) {
     removeVideo(videoId: $videoId) {
@@ -68,7 +77,7 @@ export const REMOVE_VIDEO = gql`
       publishDate
     }
   }
-`
+`;
 
 export default ADD_INTEREST;
 

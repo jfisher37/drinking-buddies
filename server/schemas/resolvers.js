@@ -113,6 +113,11 @@ const resolvers = {
 
     // Mutation to add a price-range to a user
     addPriceRange: async (parent, { _id, price_range }) => {
+      const oldData = await User.findById(_id);
+      const currentRanges = oldData.price_range;
+
+      if (currentRanges.includes(price_range)) {return};
+
       const user = await User.findOneAndUpdate(
         { _id: _id },
         {
