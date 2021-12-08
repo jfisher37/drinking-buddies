@@ -84,7 +84,7 @@ const resolvers = {
       const currentInterests = oldData.interests.map((interest) => {return interest._id});
 
       if (currentInterests.includes(interest)) {return};
-      
+
       const user = await User.findOneAndUpdate(
         { _id: _id },
         {
@@ -107,7 +107,7 @@ const resolvers = {
         {
           new: true,
         }
-      );
+      ).populate('interests');
       return user;
     },
 

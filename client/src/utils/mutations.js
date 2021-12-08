@@ -45,20 +45,15 @@ mutation ADD_USER_INTEREST($_id: ID!, $interest: ID!){
 }
 `;
 
-export const UPDATE_DISLIKES = gql`
-  mutation updateDislikes($videoId: String, $user: String) {
-    updateDislikes(videoId: $videoId, user: $user) {
-      _id
-      title
-      cloudURL
-      likes
-      dislikes
-      views
-      publishDate
-      likedBy
-      dislikedBy
+export const DELETE_USER_INTEREST = gql`
+mutation DELETE_USER_INTEREST ($_id: ID!, $interest: ID!){
+  deleteUserInterest (_id: $_id, interest: $interest){
+    name
+    interests {
+      name
     }
   }
+}
 `;
 
 export const REMOVE_VIDEO = gql`
