@@ -108,6 +108,28 @@ mutation DELETE_DRINK_LEVEL($_id: ID!, $drink_level: Int){
 }
 `;
 
+export const ADD_DRINKING_BUDDY = gql`
+mutation ADD_DRINKING_BUDDY($_id: ID!, $drinking_buddy: ID!){
+  addDrinkingBuddy(_id: $_id, drinking_buddy: $drinking_buddy){
+    name
+    drinking_buddies{
+      name
+    }
+  }
+}
+`;
+
+export const DELETE_DRINKING_BUDDY = gql`
+mutation DELETE_DRINKING_BUDDY($_id:ID!, $drinking_buddy:ID!){
+  deleteDrinkingBuddy (_id:$_id, drinking_buddy:$drinking_buddy){
+    name
+    drinking_buddies{
+      name
+    }
+  }
+}
+`;
+
 export const INC_POPULARITY = gql`
 mutation INC_POPULARITY($_id: ID!){
   incPopularity(_id: $_id){
@@ -125,6 +147,8 @@ mutation DEC_POPULARITY ($_id: ID!){
   }
 }
 `;
+
+
 
 export default ADD_INTEREST;
 

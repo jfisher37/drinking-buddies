@@ -39,6 +39,8 @@ const typeDefs = gql`
     updateUserInfo(_id: ID!, name: String!, email: String!, password: String!): User
     addUserInterest(_id: ID!, interest: ID!): User
     deleteUserInterest(_id: ID!, interest: ID!): User
+    addDrinkingBuddy(_id: ID!, drinking_buddy: ID!): User
+    deleteDrinkingBuddy(_id: ID!, drinking_buddy: ID!): User
     addPriceRange(_id: ID!, price_range: Int): User
     deletePriceRange(_id: ID!, price_range: Int): User
     addDrinkLevel(_id: ID!, drink_level: Int): User

@@ -7,22 +7,24 @@ const resolvers = {
   Query: {
     // Query for all users
     users: async () => {
-      return User.find().populate('interests');
+      return User.find().populate("interests").populate("drinking_buddies");
     },
 
     // Query for one user
     user: async (parent, { _id }) => {
-      return User.findById(_id).populate('interests');
+      return User.findById(_id).populate("interests");
     },
 
     // Query for all interests
     interests: async () => {
-      return await Interest.find().populate('created_by').sort({ popularity: -1 })
+      return await Interest.find()
+        .populate("created_by")
+        .sort({ popularity: -1 });
     },
 
     // Query for one interest
     interest: async (parent, { _id }) => {
-      return await Interest.findById({ _id: _id }).populate('created_by');
+      return await Interest.findById({ _id: _id }).populate("created_by");
     },
   },
 
@@ -30,7 +32,7 @@ const resolvers = {
     // Mutation to add an interest
     addInterest: async (parent, { name, user }) => {
       name = name.toLowerCase();
-      const interest = await Interest.create({ name:name, created_by: user });
+      const interest = await Interest.create({ name: name, created_by: user });
       return interest;
     },
 
@@ -38,7 +40,7 @@ const resolvers = {
     addUser: async (parent, { name, email, password }) => {
       const user = await User.create({ name, email, password });
       const token = await signToken(user);
-      
+
       return { user, token };
     },
 
@@ -53,7 +55,7 @@ const resolvers = {
         throw new AuthenticationError("Incorrect password!");
       }
       const token = signToken(user);
-      
+
       return { token, user };
     },
 
@@ -61,7 +63,7 @@ const resolvers = {
     updateUserInfo: async (parent, { _id, name, email, password }) => {
       const saltRounds = 10;
       const newPassword = await bcrypt.hash(password, saltRounds);
-    
+
       const user = await User.findOneAndUpdate(
         { _id: _id },
         {
@@ -79,10 +81,14 @@ const resolvers = {
     // Mutation to add an interest to a user
     addUserInterest: async (parent, { _id, interest }) => {
       const addedInterest = await Interest.findById({ _id: interest });
-      const oldData = await User.findById(_id).populate('interests');
-      const currentInterests = oldData.interests.map((interest) => {return interest._id});
+      const oldData = await User.findById(_id).populate("interests");
+      const currentInterests = oldData.interests.map((interest) => {
+        return interest._id;
+      });
 
-      if (currentInterests.includes(interest)) {return};
+      if (currentInterests.includes(interest)) {
+        return;
+      }
 
       const user = await User.findOneAndUpdate(
         { _id: _id },
@@ -92,7 +98,7 @@ const resolvers = {
         {
           new: true,
         }
-      ).populate('interests');
+      ).populate("interests");
       return user;
     },
 
@@ -106,7 +112,45 @@ const resolvers = {
         {
           new: true,
         }
-      ).populate('interests');
+      ).populate("interests");
+      return user;
+    },
+
+    // Mutation to add a drinking buddy to a user
+    addDrinkingBuddy: async (parent, { _id, drinking_buddy }) => {
+      const addedBuddy = await User.findById({ _id: drinking_buddy });
+      const oldData = await User.findById(_id).populate("drinking_buddies");
+      const currentBuddies = oldData.drinking_buddies.map((buddy) => {
+        return buddy._id;
+      });
+
+      if (currentBuddies.includes(drinking_buddy)) {
+        return;
+      }
+
+      const user = await User.findOneAndUpdate(
+        { _id: _id },
+        {
+          $push: { drinking_buddies: addedBuddy },
+        },
+        {
+          new: true,
+        }
+      ).populate("drinking_buddies");
+      return user;
+    },
+
+    // Mutation to delete a drinking buddy from a user
+    deleteDrinkingBuddy: async (parent, { _id, drinking_buddy }) => {
+      const user = await User.findOneAndUpdate(
+        { _id: _id },
+        {
+          $pull: { drinking_buddies: drinking_buddy },
+        },
+        {
+          new: true,
+        }
+      ).populate("drinking_buddy");
       return user;
     },
 
@@ -115,7 +159,9 @@ const resolvers = {
       const oldData = await User.findById(_id);
       const currentRanges = oldData.price_range;
 
-      if (currentRanges.includes(price_range)) {return};
+      if (currentRanges.includes(price_range)) {
+        return;
+      }
 
       const user = await User.findOneAndUpdate(
         { _id: _id },
@@ -147,8 +193,10 @@ const resolvers = {
     addDrinkLevel: async (parent, { _id, drink_level }) => {
       const oldData = await User.findById(_id);
       const currentLevels = oldData.drink_level;
-      
-      if (currentLevels.includes(drink_level)) {return};
+
+      if (currentLevels.includes(drink_level)) {
+        return;
+      }
 
       const user = await User.findOneAndUpdate(
         { _id: _id },
@@ -203,7 +251,7 @@ const resolvers = {
       );
       return interest;
     },
-    
+
     // Mutation to update (rename) an interest
     updateInterest: async (parent, { _id, name }) => {
       const interest = await Interest.findOneAndUpdate(
@@ -216,7 +264,7 @@ const resolvers = {
         }
       );
       return interest;
-    },    
+    },
 
     // Mutation to delete a user
     deleteUser: async (parent, { _id }) => {
