@@ -61,8 +61,7 @@ const resolvers = {
     updateUserInfo: async (parent, { _id, name, email, password }) => {
       const saltRounds = 10;
       const newPassword = await bcrypt.hash(password, saltRounds);
-      console.log(password)
-      console.log(newPassword)
+    
       const user = await User.findOneAndUpdate(
         { _id: _id },
         {

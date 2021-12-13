@@ -8,6 +8,14 @@ mutation ADD_USER ($name: String!, $email: String!, $password: String!){
 }
 `;
 
+export const DELETE_USER = gql`
+mutation DELETE_USER ($_id: ID!){
+  deleteUser(_id: $_id){
+    name
+  }
+}
+`;
+
 export const UPDATE_USER_INFO = gql`
 mutation UPDATE_USER_INFO($_id: ID!, $name: String!, $email: String!, $password: String!){
   updateUserInfo(_id: $_id, name: $name, email: $email, password: $password){
@@ -29,6 +37,14 @@ export const ADD_INTEREST = gql`
 mutation ADD_INTEREST($name: String!){
   addInterest (name: $name){
     _id
+    name
+  }
+}
+`;
+
+export const DELETE_INTEREST = gql`
+mutation DELETE_INTEREST($_id: ID!){
+  deleteInterest(_id: $_id){
     name
   }
 }
