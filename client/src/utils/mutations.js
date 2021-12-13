@@ -65,18 +65,49 @@ mutation ADD_PRICE_RANGE($_id: ID!, $price_range: Int){
 }
 `;
 
-export const REMOVE_VIDEO = gql`
-  mutation removeVideo($videoId: ID!) {
-    removeVideo(videoId: $videoId) {
-      _id
-      title
-      cloudURL
-      likes
-      dislikes
-      views
-      publishDate
-    }
+export const DELETE_PRICE_RANGE = gql`
+mutation DELETE_PRICE_RANGE($_id:ID!, $price_range: Int){
+  deletePriceRange(_id: $_id, price_range: $price_range){
+    name
+    price_range
   }
+}
+`;
+
+export const ADD_DRINK_LEVEL = gql`
+mutation ADD_DRINK_LEVEL($_id: ID!, $drink_level: Int){
+  addDrinkLevel(_id: $_id, drink_level: $drink_level){
+    name
+    drink_level
+  }
+}
+`;
+
+export const DELETE_DRINK_LEVEL = gql`
+mutation DELETE_DRINK_LEVEL($_id: ID!, $drink_level: Int){
+  deleteDrinkLevel(_id: $_id, drink_level: $drink_level){
+    name
+    drink_level
+  }
+}
+`;
+
+export const INC_POPULARITY = gql`
+mutation INC_POPULARITY($_id: ID!){
+  incPopularity(_id: $_id){
+    name
+    popularity
+  }
+}
+`;
+
+export const DEC_POPULARITY = gql`
+mutation DEC_POPULARITY ($_id: ID!){
+  decPopularity(_id: $_id){
+    name
+    popularity
+  }
+}
 `;
 
 export default ADD_INTEREST;

@@ -36,6 +36,13 @@ const userSchema = new Schema({
     },
   ],
 
+  drinking_buddies: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+
 });
 
 // set up pre-save middleware to create password

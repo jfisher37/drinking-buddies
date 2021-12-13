@@ -146,6 +146,11 @@ const resolvers = {
 
     // Mutation to add a drink-level to a user
     addDrinkLevel: async (parent, { _id, drink_level }) => {
+      const oldData = await User.findById(_id);
+      const currentLevels = oldData.drink_level;
+      
+      if (currentLevels.includes(drink_level)) {return};
+
       const user = await User.findOneAndUpdate(
         { _id: _id },
         {
