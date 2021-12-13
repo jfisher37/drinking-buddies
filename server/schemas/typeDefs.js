@@ -9,12 +9,16 @@ const typeDefs = gql`
     drink_level: [Int]
     price_range: [Int]
     interests: [Interest]
+    drinking_buddies: [User]
+    creation_date: String
   }
 
   type Interest {
     _id: ID
     name: String!
     popularity: Int
+    created_by: User
+    creation_date: String
   }
 
   type Auth {
@@ -40,7 +44,7 @@ const typeDefs = gql`
     addDrinkLevel(_id: ID!, drink_level: Int): User
     deleteDrinkLevel(_id: ID!, drink_level: Int): User
     deleteUser(_id: ID!): User
-    addInterest(name: String!): Interest
+    addInterest(name: String!, user: ID!): Interest
     deleteInterest(_id: ID!): Interest
     updateInterest(_id: ID!, name: String!): Interest
     incPopularity(_id: ID!): Interest

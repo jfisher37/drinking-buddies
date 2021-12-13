@@ -17,20 +17,20 @@ const resolvers = {
 
     // Query for all interests
     interests: async () => {
-      return await Interest.find().sort({ popularity: -1 })
+      return await Interest.find().populate('created_by').sort({ popularity: -1 })
     },
 
     // Query for one interest
     interest: async (parent, { _id }) => {
-      return await Interest.findById({ _id: _id });
+      return await Interest.findById({ _id: _id }).populate('created_by');
     },
   },
 
   Mutation: {
     // Mutation to add an interest
-    addInterest: async (parent, { name }) => {
+    addInterest: async (parent, { name, user }) => {
       name = name.toLowerCase();
-      const interest = await Interest.create({ name });
+      const interest = await Interest.create({ name:name, created_by: user });
       return interest;
     },
 
@@ -38,7 +38,7 @@ const resolvers = {
     addUser: async (parent, { name, email, password }) => {
       const user = await User.create({ name, email, password });
       const token = await signToken(user);
-      console.log(token);
+      
       return { user, token };
     },
 
@@ -53,7 +53,7 @@ const resolvers = {
         throw new AuthenticationError("Incorrect password!");
       }
       const token = signToken(user);
-      console.log(user);
+      
       return { token, user };
     },
 
