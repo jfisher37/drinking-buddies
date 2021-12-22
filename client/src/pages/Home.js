@@ -1,28 +1,23 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { QUERY_VIDEOS } from "../utils/queries";
-import VideoList from "../components/VideoList";
+import { QUERY_ALL_USERS } from "../utils/queries"
+
 // Home page
 const Home = () => {
-  // Queries videos
-  const { loading, data } = useQuery(QUERY_VIDEOS);
-  const videos = data?.videos || [];
+  const { loading, data } = useQuery(QUERY_ALL_USERS);
+  const info = data || [];
+  const users = info.users;
 
   return (
-    <Container>
-      <Row>
-        <Col>
+    <div>
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <VideoList videos={videos} title="HEADER TEXT" />
+            <ul>
+              {users.map((user) => (<li>{user.name}</li>))}
+            </ul>
           )}
-        </Col>
-      </Row>
-    </Container>
+    </div>
   );
 };
 

@@ -124,7 +124,6 @@ nav {
   font-weight: 900;
 }
 
-/* https://codingyaar.com/responsive-bootstrap-navbar-with-logo-centered-above-navbar/ */
 .navbar .navbar-nav .nav-link {
   color: var(--gold);
   font-size: 1.1em;

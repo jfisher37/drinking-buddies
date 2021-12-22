@@ -11,7 +11,8 @@ const resolvers = {
     },
 
     // Query for one user
-    user: async (parent, { _id }) => {
+    user: async (parent, { _id }, context) => {
+      console.log(context);
       return User.findById(_id).populate("interests");
     },
 
