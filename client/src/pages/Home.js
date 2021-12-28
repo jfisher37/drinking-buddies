@@ -14,7 +14,7 @@ const Home = () => {
             <div>Loading...</div>
           ) : (
             <ul>
-              {users.map((user) => (<li>{user.name}</li>))}
+              {users.map((user) => (<li key={user._id}>{user.name}</li>))}
             </ul>
           )}
     </div>

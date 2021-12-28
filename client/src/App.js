@@ -41,14 +41,14 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="footer-positioning">
-          {/* <Header /> */}
+          <Header />
           <Route exact path="/">
             <Home />
           </Route>
-          {/* <Route exact path="/login">
+          <Route exact path="/login">
             <Login />
           </Route>
-          <Route exact path="/signup">
+          {/* <Route exact path="/signup">
             <Signup />
           </Route>
           <Route exact path="/me">
