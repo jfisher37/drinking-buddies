@@ -1,1 +1,1 @@
-# Sips
+# Drinking Buddies
